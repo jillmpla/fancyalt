@@ -136,10 +136,6 @@ app.use((err, req, res, next) => {
 });
 
 //start server
-//app.listen(PORT, () => {
-//  console.log(`FancyAlt API running on http://localhost:${PORT}`);
-//});
-
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`FancyAlt API running on http://0.0.0.0:${PORT}`);
 });
