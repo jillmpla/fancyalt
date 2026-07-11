@@ -1,0 +1,12 @@
+FancyAlt - Copyright © 2025 Jill Platts
+
+All rights reserved.
+
+This software is provided for evaluation and demonstration purposes only.
+
+You may not:
+- Use this software for any commercial purpose without a paid license.
+- Modify or distribute this software without express written consent.
+- Include this code or any derivative in a commercial product without permission.
+
+For licensing inquiries, contact: fancyaltdotcom@gmail.com

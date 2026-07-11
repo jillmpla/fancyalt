@@ -1,0 +1,1236 @@
+/* public/swagger-custom.css */
+
+:root {
+    --page-bg: #f8f6fb;
+    --surface: #ffffff;
+    --surface-soft: #f6f1fa;
+
+    --text: #25172d;
+    --text-secondary: #62576a;
+    --text-muted: #75687d;
+
+    --border: #ded4e4;
+    --border-strong: #c9b9d2;
+
+    --brand: #7b2cf2;
+    --brand-hover: #6120c9;
+    --brand-soft: #f2eaff;
+
+    --post: #168267;
+    --post-soft: #edf9f5;
+
+    --get: #2563c7;
+    --get-soft: #eff5ff;
+
+    --danger: #b42318;
+    --danger-hover: #8f1c14;
+
+    --code-bg: #201527;
+    --code-text: #ffffff;
+
+    --shadow:
+        0 4px 18px rgba(58, 28, 72, 0.08);
+
+    --focus:
+        0 0 0 3px rgba(123, 44, 242, 0.22);
+}
+
+/* Page */
+
+html,
+body {
+    min-height: 100%;
+    margin: 0 !important;
+    background: var(--page-bg) !important;
+}
+
+body,
+.swagger-ui {
+    color: var(--text) !important;
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif !important;
+}
+
+.swagger-ui {
+    background: transparent !important;
+    font-size: 1rem !important;
+}
+
+.swagger-ui .topbar {
+    display: none !important;
+}
+
+.swagger-ui .wrapper {
+    max-width: 1120px !important;
+    padding: 0 1.25rem !important;
+}
+
+/* API information */
+
+.swagger-ui .information-container {
+    max-width: 1120px !important;
+    margin: 2rem auto 1.5rem !important;
+    padding: 2rem !important;
+
+    border: 1px solid var(--border) !important;
+    border-left: 6px solid var(--brand) !important;
+    border-radius: 16px !important;
+
+    background: var(--surface) !important;
+    box-shadow: var(--shadow) !important;
+}
+
+.swagger-ui .info {
+    margin: 0 !important;
+}
+
+/* Title and version badges */
+
+.swagger-ui .info .title {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+
+    margin: 0 0 1.15rem !important;
+
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-size: clamp(2.6rem, 5vw, 4rem) !important;
+    font-weight: 750 !important;
+    letter-spacing: -0.045em !important;
+    line-height: 1.05 !important;
+}
+
+.swagger-ui .info .title small {
+    position: static !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+
+    margin: 0 0 0 0.25rem !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    background: transparent !important;
+
+    overflow: visible !important;
+}
+
+.swagger-ui .info .title small pre {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    min-height: 38px !important;
+
+    margin: 0 !important;
+    padding: 0.48rem 0.9rem !important;
+
+    overflow: visible !important;
+    white-space: nowrap !important;
+    text-overflow: clip !important;
+
+    border: 1px solid #d3bdf7 !important;
+    border-radius: 999px !important;
+    background: var(--brand-soft) !important;
+
+    color: var(--brand-hover) !important;
+    -webkit-text-fill-color: var(--brand-hover) !important;
+
+    font-family:
+        Arial,
+        "Segoe UI",
+        sans-serif !important;
+
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    letter-spacing: 0.015em !important;
+    line-height: 1 !important;
+
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+/* Documentation text */
+
+.swagger-ui .info p,
+.swagger-ui .info li,
+.swagger-ui .markdown p,
+.swagger-ui .markdown li,
+.swagger-ui .renderedMarkdown p,
+.swagger-ui .renderedMarkdown li,
+.swagger-ui .description,
+.swagger-ui .description p {
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+}
+
+.swagger-ui .info h1,
+.swagger-ui .info h2,
+.swagger-ui .info h3,
+.swagger-ui .info h4,
+.swagger-ui .markdown h1,
+.swagger-ui .markdown h2,
+.swagger-ui .markdown h3,
+.swagger-ui .markdown h4,
+.swagger-ui .renderedMarkdown h1,
+.swagger-ui .renderedMarkdown h2,
+.swagger-ui .renderedMarkdown h3,
+.swagger-ui .renderedMarkdown h4 {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+.swagger-ui .info h2,
+.swagger-ui .markdown h2,
+.swagger-ui .renderedMarkdown h2 {
+    margin: 1.45rem 0 0.55rem !important;
+    font-size: 1.45rem !important;
+}
+
+.swagger-ui .info h3,
+.swagger-ui .markdown h3,
+.swagger-ui .renderedMarkdown h3 {
+    margin-top: 1.2rem !important;
+    font-size: 1.16rem !important;
+}
+
+.swagger-ui .info a,
+.swagger-ui .markdown a,
+.swagger-ui .renderedMarkdown a {
+    color: var(--brand) !important;
+    -webkit-text-fill-color: var(--brand) !important;
+    font-weight: 650 !important;
+}
+
+.swagger-ui .info a:hover,
+.swagger-ui .markdown a:hover,
+.swagger-ui .renderedMarkdown a:hover {
+    color: var(--brand-hover) !important;
+    -webkit-text-fill-color: var(--brand-hover) !important;
+}
+
+/* Inline code */
+
+.swagger-ui .info code,
+.swagger-ui .markdown code,
+.swagger-ui .renderedMarkdown code {
+    display: inline-block !important;
+
+    padding: 0.18rem 0.42rem !important;
+    border-radius: 5px !important;
+
+    background: var(--code-bg) !important;
+    color: #f5c3ff !important;
+    -webkit-text-fill-color: #f5c3ff !important;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace !important;
+
+    font-size: 0.9em !important;
+    font-weight: 700 !important;
+}
+
+/* Server selector */
+
+.swagger-ui .scheme-container {
+    max-width: 1120px !important;
+    margin: 0 auto 1.5rem !important;
+    padding: 1rem 1.25rem !important;
+
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+
+    background: var(--surface) !important;
+    box-shadow: var(--shadow) !important;
+}
+
+.swagger-ui .scheme-container label,
+.swagger-ui .servers-title {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    font-weight: 700 !important;
+}
+
+/* Form controls */
+
+.swagger-ui select,
+.swagger-ui input[type="text"],
+.swagger-ui input[type="password"],
+.swagger-ui input[type="email"],
+.swagger-ui input[type="file"],
+.swagger-ui input[type="number"],
+.swagger-ui textarea {
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 8px !important;
+
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    box-shadow: none !important;
+}
+
+.swagger-ui select,
+.swagger-ui input {
+    min-height: 42px !important;
+}
+
+.swagger-ui select {
+    padding: 0.45rem 0.75rem !important;
+}
+
+.swagger-ui textarea {
+    min-height: 130px !important;
+}
+
+.swagger-ui input:focus,
+.swagger-ui select:focus,
+.swagger-ui textarea:focus {
+    outline: none !important;
+    border-color: var(--brand) !important;
+    box-shadow: var(--focus) !important;
+}
+
+/* API group headings */
+
+.swagger-ui .opblock-tag-section {
+    margin-bottom: 1.75rem !important;
+}
+
+.swagger-ui .opblock-tag {
+    margin: 1.75rem 0 0.85rem !important;
+    padding: 0.9rem 0 !important;
+
+    border-bottom: 2px solid var(--border) !important;
+
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-size: 1.45rem !important;
+    font-weight: 750 !important;
+}
+
+.swagger-ui .opblock-tag:hover {
+    background: transparent !important;
+}
+
+.swagger-ui .opblock-tag small,
+.swagger-ui .opblock-tag small p {
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
+
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
+}
+
+/* Endpoint cards */
+
+.swagger-ui .opblock {
+    overflow: hidden !important;
+
+    margin: 0 0 1.1rem !important;
+    border-radius: 12px !important;
+
+    background: var(--surface) !important;
+    box-shadow: var(--shadow) !important;
+}
+
+.swagger-ui .opblock .opblock-summary {
+    min-height: 58px !important;
+    padding: 0.55rem 0.75rem !important;
+}
+
+.swagger-ui .opblock .opblock-summary-method {
+    min-width: 82px !important;
+    padding: 0.45rem 0.7rem !important;
+    border-radius: 7px !important;
+
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+
+    font-size: 0.78rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em !important;
+}
+
+.swagger-ui .opblock .opblock-summary-path,
+.swagger-ui .opblock .opblock-summary-path a {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-size: 0.98rem !important;
+    font-weight: 750 !important;
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+}
+
+.swagger-ui .opblock .opblock-section-header {
+    padding: 0.8rem 1rem !important;
+    background: var(--surface-soft) !important;
+    box-shadow: none !important;
+}
+
+.swagger-ui .opblock .opblock-section-header h4,
+.swagger-ui .opblock .opblock-section-header label,
+.swagger-ui .opblock-body h4,
+.swagger-ui .opblock-body h5 {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+.swagger-ui .opblock-body {
+    background: var(--surface) !important;
+}
+
+.swagger-ui .opblock-description-wrapper,
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper,
+.swagger-ui .opblock-title_normal {
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+}
+
+/* Endpoint method colors */
+
+.swagger-ui .opblock.opblock-post {
+    border: 1px solid var(--post) !important;
+    background: var(--post-soft) !important;
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary {
+    border-color: var(--post) !important;
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+    background: var(--post) !important;
+}
+
+.swagger-ui .opblock.opblock-get {
+    border: 1px solid var(--get) !important;
+    background: var(--get-soft) !important;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary {
+    border-color: var(--get) !important;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+    background: var(--get) !important;
+}
+
+/* Tables */
+
+.swagger-ui table thead tr th,
+.swagger-ui table thead tr td,
+.swagger-ui .parameter__name,
+.swagger-ui .response-col_status {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    font-weight: 750 !important;
+}
+
+.swagger-ui table tbody tr td,
+.swagger-ui .response-col_description,
+.swagger-ui .response-col_description p {
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+}
+
+.swagger-ui .parameter__type {
+    color: var(--brand) !important;
+    -webkit-text-fill-color: var(--brand) !important;
+}
+
+.swagger-ui .parameter__in,
+.swagger-ui .parameter__deprecated {
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+/* Response separation */
+
+.swagger-ui .responses-table {
+    border-collapse: separate !important;
+    border-spacing: 0 1rem !important;
+}
+
+.swagger-ui .responses-table tbody tr.response > td {
+    padding-top: 1.2rem !important;
+    padding-bottom: 1.3rem !important;
+
+    border-top: 1px solid var(--border-strong) !important;
+    border-bottom: 1px solid var(--border-strong) !important;
+
+    background: var(--surface) !important;
+}
+
+.swagger-ui .responses-table tbody tr.response > td:first-child {
+    padding-left: 1rem !important;
+
+    border-left: 1px solid var(--border-strong) !important;
+    border-radius: 12px 0 0 12px !important;
+
+    background: var(--brand-soft) !important;
+}
+
+.swagger-ui .responses-table tbody tr.response > td:last-child {
+    padding-right: 1rem !important;
+
+    border-right: 1px solid var(--border-strong) !important;
+    border-radius: 0 12px 12px 0 !important;
+}
+
+.swagger-ui .responses-table .response-col_status {
+    width: 90px !important;
+
+    color: var(--brand-hover) !important;
+    -webkit-text-fill-color: var(--brand-hover) !important;
+
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+}
+
+.swagger-ui .responses-table .response-col_description {
+    padding-left: 1.2rem !important;
+}
+
+.swagger-ui .responses-table .headers-wrapper {
+    margin-top: 1.2rem !important;
+    padding-top: 1rem !important;
+    border-top: 2px solid var(--border) !important;
+}
+
+/* Buttons */
+
+.swagger-ui .btn {
+    min-height: 40px !important;
+    padding: 0.5rem 0.9rem !important;
+
+    border: 1px solid var(--brand) !important;
+    border-radius: 999px !important;
+
+    background: var(--brand) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+
+    font-weight: 750 !important;
+    box-shadow: none !important;
+}
+
+.swagger-ui .btn:hover {
+    border-color: var(--brand-hover) !important;
+    background: var(--brand-hover) !important;
+}
+
+.swagger-ui .btn:focus-visible {
+    outline: none !important;
+    box-shadow: var(--focus) !important;
+}
+
+.swagger-ui .btn.cancel {
+    border-color: var(--danger) !important;
+    background: var(--danger) !important;
+}
+
+.swagger-ui .btn.cancel:hover {
+    border-color: var(--danger-hover) !important;
+    background: var(--danger-hover) !important;
+}
+
+.swagger-ui .btn.execute {
+    width: 100% !important;
+}
+
+/* Schemas */
+
+.swagger-ui section.models,
+.swagger-ui section.models * {
+    box-sizing: border-box !important;
+}
+
+.swagger-ui section.models {
+    overflow: hidden !important;
+
+    margin: 2rem 0 !important;
+    padding: 0 !important;
+
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 14px !important;
+
+    background: var(--surface) !important;
+    color: var(--text) !important;
+
+    box-shadow: var(--shadow) !important;
+}
+
+.swagger-ui section.models.is-open {
+    padding-bottom: 1rem !important;
+}
+
+.swagger-ui section.models h4 {
+    margin: 0 !important;
+}
+
+/* Schemas heading */
+
+.swagger-ui section.models .models-control {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    width: 100% !important;
+    padding: 1.1rem 1.25rem !important;
+
+    border: 0 !important;
+    border-bottom: 1px solid var(--border) !important;
+
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif !important;
+
+    font-size: 1.55rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+}
+
+.swagger-ui section.models .models-control:hover {
+    background: var(--surface-soft) !important;
+}
+
+.swagger-ui section.models .models-control:focus-visible {
+    outline: none !important;
+    box-shadow: inset var(--focus) !important;
+}
+
+.swagger-ui section.models .models-control svg,
+.swagger-ui section.models .models-control svg path {
+    fill: var(--brand-hover) !important;
+    stroke: var(--brand-hover) !important;
+    opacity: 1 !important;
+}
+
+/* Individual schema cards */
+
+.swagger-ui section.models .model-container {
+    display: block !important;
+
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+
+    margin: 0.8rem 1rem !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    border: 1px solid #d8c9e2 !important;
+    border-radius: 10px !important;
+
+    background: var(--surface) !important;
+    color: var(--text) !important;
+
+    box-shadow: none !important;
+}
+
+.swagger-ui section.models .model-container:first-of-type {
+    margin-top: 1rem !important;
+}
+
+.swagger-ui section.models .model-container:last-of-type {
+    margin-bottom: 0 !important;
+}
+
+.swagger-ui section.models .model-container:hover {
+    border-color: #b994d2 !important;
+    background: var(--surface) !important;
+}
+
+/*
+ * Reset Swagger's built-in model-box display, background, and sizing.
+ */
+
+.swagger-ui section.models .model-container > .model-box {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    box-shadow: none !important;
+}
+
+/* Collapsed and expanded schema header */
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control {
+    all: unset !important;
+
+    box-sizing: border-box !important;
+    position: relative !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 58px !important;
+
+    margin: 0 !important;
+    padding: 0.9rem 4.25rem 0.9rem 1rem !important;
+
+    border: 0 !important;
+    border-radius: 9px !important;
+
+    background: #faf7fc !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    cursor: pointer !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control:hover {
+    background: var(--brand-soft) !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control:focus-visible {
+    outline: none !important;
+    box-shadow: inset var(--focus) !important;
+}
+
+
+/* Keep each main schema arrow aligned at the far right */
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control > .model-toggle {
+    position: absolute !important;
+    top: 50% !important;
+    right: 1rem !important;
+    left: auto !important;
+
+    margin: 0 !important;
+
+    transform: translateY(-50%) !important;
+}
+
+/* Schema names */
+
+.swagger-ui section.models .model-title,
+.swagger-ui section.models .model-title__text,
+.swagger-ui section.models button.model-box-control > span:first-child {
+    display: inline !important;
+
+    width: auto !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif !important;
+
+    font-size: 1.05rem !important;
+    font-weight: 750 !important;
+    line-height: 1.35 !important;
+
+    opacity: 1 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+/* Expand and collapse arrows */
+
+.swagger-ui section.models .model-toggle {
+    position: relative !important;
+    top: auto !important;
+
+    display: inline-grid !important;
+    place-items: center !important;
+
+    flex: 0 0 auto !important;
+
+    width: 30px !important;
+    height: 30px !important;
+    margin: 0 0 0 0.75rem !important;
+
+    border: 1px solid #cdb7dc !important;
+    border-radius: 50% !important;
+
+    background-color: var(--brand-soft) !important;
+    background-image: none !important;
+
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.swagger-ui section.models .model-toggle::after {
+    display: block !important;
+
+    width: 8px !important;
+    height: 8px !important;
+
+    border-right: 2px solid var(--brand-hover) !important;
+    border-bottom: 2px solid var(--brand-hover) !important;
+
+    background: none !important;
+    content: "" !important;
+
+    transform: rotate(45deg) !important;
+}
+
+.swagger-ui section.models .model-toggle.collapsed::after {
+    transform: rotate(-45deg) !important;
+}
+
+.swagger-ui section.models .model-toggle:hover {
+    border-color: var(--brand) !important;
+    background-color: #e8d9ff !important;
+}
+
+/* Expanded schema body */
+
+.swagger-ui section.models
+.model-container > .model-box > .model {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    max-height: none !important;
+
+    margin: 0 !important;
+    padding: 1rem 1.1rem !important;
+
+    overflow: visible !important;
+
+    border-top: 1px solid var(--border) !important;
+
+    background: var(--surface) !important;
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace !important;
+
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    line-height: 1.55 !important;
+}
+
+/* Remove dark backgrounds from every nested schema element */
+
+.swagger-ui section.models .model,
+.swagger-ui section.models .model-box,
+.swagger-ui section.models .property-row,
+.swagger-ui section.models table,
+.swagger-ui section.models tbody,
+.swagger-ui section.models tr,
+.swagger-ui section.models td {
+    background-color: transparent !important;
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+}
+
+/* Property layout */
+
+.swagger-ui section.models table.model {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    border-collapse: collapse !important;
+    background: transparent !important;
+}
+
+.swagger-ui section.models table.model > tbody {
+    display: block !important;
+    width: 100% !important;
+}
+
+.swagger-ui section.models table.model tr.property-row {
+    display: grid !important;
+    grid-template-columns:
+        minmax(150px, 220px)
+        minmax(0, 1fr) !important;
+
+    width: 100% !important;
+
+    padding: 0.8rem 0 !important;
+
+    border-bottom: 1px solid #ece4f0 !important;
+}
+
+.swagger-ui section.models
+table.model tr.property-row:last-child {
+    border-bottom: 0 !important;
+}
+
+.swagger-ui section.models table.model tr.property-row > td {
+    display: block !important;
+
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 0.65rem !important;
+
+    border: 0 !important;
+
+    background: transparent !important;
+    vertical-align: top !important;
+}
+
+.swagger-ui section.models
+table.model tr.property-row > td:first-child {
+    padding-left: 0 !important;
+}
+
+/* Property names and types */
+
+.swagger-ui section.models .prop-name {
+    display: inline-block !important;
+
+    margin: 0 !important;
+
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace !important;
+
+    font-size: 0.92rem !important;
+    font-weight: 750 !important;
+    line-height: 1.4 !important;
+
+    overflow-wrap: anywhere !important;
+}
+
+.swagger-ui section.models .prop-type {
+    color: var(--brand-hover) !important;
+    -webkit-text-fill-color: var(--brand-hover) !important;
+
+    font-size: 0.88rem !important;
+    font-weight: 750 !important;
+}
+
+.swagger-ui section.models .prop-format,
+.swagger-ui section.models .property,
+.swagger-ui section.models .description,
+.swagger-ui section.models .brace-open,
+.swagger-ui section.models .brace-close {
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
+}
+
+/* Nested referenced schemas */
+
+.swagger-ui section.models .model .model-box {
+    display: inline-block !important;
+
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    margin: 0.15rem 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    background: transparent !important;
+
+    box-shadow: none !important;
+    vertical-align: middle !important;
+}
+
+.swagger-ui section.models
+.model .model-box > button.model-box-control {
+    all: unset !important;
+
+    box-sizing: border-box !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.8rem !important;
+
+    width: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 34px !important;
+
+    margin: 0 !important;
+    padding: 0.35rem 0.6rem !important;
+
+    border: 1px solid #d7c6e2 !important;
+    border-radius: 7px !important;
+
+    background: #f7f1fb !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    cursor: pointer !important;
+}
+
+.swagger-ui section.models
+.model .model-box > button.model-box-control:hover {
+    border-color: #b58bd1 !important;
+    background: var(--brand-soft) !important;
+}
+
+.swagger-ui section.models
+.model .model-box > button.model-box-control:focus-visible {
+    outline: none !important;
+    box-shadow: var(--focus) !important;
+}
+
+.swagger-ui section.models .model .model-title,
+.swagger-ui section.models .model .model-title__text {
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+}
+
+.swagger-ui section.models .model .model-toggle {
+    flex: 0 0 auto !important;
+
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 0.7rem 0 0 !important;
+
+    border: 0 !important;
+    background-color: transparent !important;
+}
+
+/*
+ * When the nested arrow is already inside its button, the button's
+ * gap provides the spacing. This prevents the two values from stacking.
+ */
+.swagger-ui section.models
+.model .model-box > button.model-box-control > .model-toggle {
+    margin: 0 !important;
+}
+
+/*
+ * Some Swagger schema controls place the arrow immediately before the
+ * type or label instead of inside the button. Keep those readable too.
+ */
+.swagger-ui section.models .model-toggle + .prop-type,
+.swagger-ui section.models .model-toggle + .model-title,
+.swagger-ui section.models .model-toggle + .model-title__text,
+.swagger-ui section.models .model-toggle + span {
+    margin-left: 0.15rem !important;
+}
+
+.swagger-ui section.models .model .model-toggle::after {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+/* Enum values and inline code */
+
+.swagger-ui section.models code,
+.swagger-ui section.models .model code {
+    display: inline-block !important;
+
+    margin: 0.1rem 0.12rem !important;
+    padding: 0.2rem 0.42rem !important;
+
+    border: 1px solid #61406f !important;
+    border-radius: 5px !important;
+
+    background: #291732 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace !important;
+
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+/* Mobile schemas */
+
+@media (max-width: 700px) {
+    .swagger-ui section.models .models-control {
+        padding: 1rem !important;
+        font-size: 1.35rem !important;
+    }
+
+    .swagger-ui section.models .model-container {
+        margin: 0.7rem 0.6rem !important;
+    }
+
+    .swagger-ui section.models
+    .model-container > .model-box > button.model-box-control {
+        min-height: 54px !important;
+        padding: 0.75rem 3.75rem 0.75rem 0.8rem !important;
+    }
+
+    .swagger-ui section.models
+    .model-container > .model-box > button.model-box-control > .model-toggle {
+        right: 0.8rem !important;
+    }
+
+    .swagger-ui section.models
+    .model-container > .model-box > .model {
+        padding: 0.75rem !important;
+    }
+
+    .swagger-ui section.models table.model tr.property-row {
+        display: block !important;
+        padding: 0.65rem 0 !important;
+    }
+
+    .swagger-ui section.models
+    table.model tr.property-row > td {
+        width: 100% !important;
+        padding: 0.25rem 0 !important;
+    }
+}
+
+
+/* Response code blocks */
+
+.swagger-ui .highlight-code,
+.swagger-ui .microlight,
+.swagger-ui .curl-command,
+.swagger-ui .response-col_description pre,
+.swagger-ui .opblock-body pre {
+    border-radius: 8px !important;
+    background: var(--code-bg) !important;
+
+    color: var(--code-text) !important;
+    -webkit-text-fill-color: var(--code-text) !important;
+}
+
+.swagger-ui .copy-to-clipboard {
+    border-radius: 6px !important;
+    background: var(--brand) !important;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    .swagger-ui .wrapper {
+        padding-right: 0.65rem !important;
+        padding-left: 0.65rem !important;
+    }
+
+    .swagger-ui .information-container {
+        margin-top: 1rem !important;
+        padding: 1.15rem !important;
+    }
+
+    .swagger-ui .info .title {
+        align-items: flex-start !important;
+        gap: 0.55rem 0.7rem !important;
+        font-size: 2.35rem !important;
+    }
+
+    .swagger-ui .info .title small pre {
+        min-height: 31px !important;
+        padding: 0.38rem 0.68rem !important;
+        font-size: 0.84rem !important;
+    }
+
+    .swagger-ui .opblock .opblock-summary {
+        align-items: flex-start !important;
+        flex-wrap: wrap !important;
+    }
+
+    .swagger-ui .opblock .opblock-summary-description {
+        width: 100% !important;
+        padding-top: 0.35rem !important;
+    }
+
+    .swagger-ui table {
+        display: block !important;
+        overflow-x: auto !important;
+    }
+
+    .swagger-ui .responses-table {
+        border-spacing: 0 0.75rem !important;
+    }
+
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .swagger-ui *,
+    .swagger-ui *::before,
+    .swagger-ui *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

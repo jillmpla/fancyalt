@@ -1,0 +1,1117 @@
+openapi: 3.0.3
+
+info:
+  title: FancyAlt API
+  version: 2.0.0
+  description: |
+    FancyAlt is an accessibility-focused image analysis API powered by OpenAI.
+
+    Submit an uploaded image or a public image URL and select one output mode.
+    FancyAlt returns only the requested generated result.
+
+    ## Output modes
+
+    - `concise` — Focused alt text
+    - `detailed` — Fuller visual description
+    - `social` — Natural social media description
+    - `story` — Short fictional story created directly from the image
+    - `moderateOnly` — Image safety results without generated text
+
+    ## Request behavior
+
+    Every image is checked by the moderation service first.
+
+    Non-moderation modes make one mode-specific OpenAI Responses API image
+    request. `moderateOnly` stops after moderation and does not make a
+    Responses API image request.
+
+    When `includeVisibleText` is enabled, visible-text extraction is included
+    in the same mode-specific image request.
+
+    ## Supported images
+
+    Uploaded files must be JPEG, PNG, or WEBP images no larger than 5 MB.
+    Public image URLs must use HTTP or HTTPS, must be publicly reachable, and
+    cannot point to localhost or a loopback address.
+
+    ## Privacy and limits
+
+    Uploaded images are held in memory during the request and are not written
+    to the application's local file system.
+
+    API endpoints are limited to 25 requests per IP address every 15 minutes.
+    Responses include an `X-Request-ID` header for troubleshooting.
+
+    Client authentication is not currently required. The server's OpenAI API
+    key is private and must never be included in client requests.
+
+  contact:
+    name: FancyAlt
+    email: fancyaltdotcom@gmail.com
+
+servers:
+  - url: https://fancyalt.com/api
+    description: Production
+
+  - url: http://localhost:5000/api
+    description: Local development
+
+tags:
+  - name: Image Analysis
+    description: Generate one selected image result or run a safety check.
+
+  - name: Service
+    description: Check whether the FancyAlt API is running.
+
+paths:
+  /generate-caption:
+    post:
+      tags:
+        - Image Analysis
+
+      operationId: analyzeUploadedImage
+      summary: Analyze an uploaded image
+
+      description: |
+        Upload one image using `multipart/form-data`.
+
+        The file field must be named `image`. FancyAlt moderates the image
+        first, then returns only the selected result. `moderateOnly` returns
+        after moderation without generating text.
+
+      requestBody:
+        required: true
+
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadImageRequest'
+
+            encoding:
+              image:
+                contentType: image/jpeg, image/png, image/webp
+
+            examples:
+              concise:
+                summary: Concise alt text
+                value:
+                  mode: concise
+                  maxLength: 160
+                  includeVisibleText: true
+
+              detailed:
+                summary: Detailed description
+                value:
+                  mode: detailed
+                  maxLength: 500
+                  includeVisibleText: false
+
+              social:
+                summary: Social media description
+                value:
+                  mode: social
+                  maxLength: 250
+                  includeVisibleText: true
+
+              story:
+                summary: Short creative story
+                value:
+                  mode: story
+                  maxLength: 500
+                  includeVisibleText: false
+
+              moderationOnly:
+                summary: Safety check only
+                value:
+                  mode: moderateOnly
+
+      responses:
+        '200':
+          description: The uploaded image was processed successfully.
+
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
+
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/GeneratedResponse'
+                  - $ref: '#/components/schemas/ModerationOnlyResponse'
+
+              examples:
+                concise:
+                  $ref: '#/components/examples/ConciseUploadResponse'
+
+                detailed:
+                  $ref: '#/components/examples/DetailedUploadResponse'
+
+                social:
+                  $ref: '#/components/examples/SocialUploadResponse'
+
+                story:
+                  $ref: '#/components/examples/StoryUploadResponse'
+
+                moderationOnly:
+                  $ref: '#/components/examples/ModerationOnlyUploadResponse'
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+        '502':
+          $ref: '#/components/responses/BadGateway'
+
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /analyze-url:
+    post:
+      tags:
+        - Image Analysis
+
+      operationId: analyzeImageUrl
+      summary: Analyze a public image URL
+
+      description: |
+        Analyze an image available at a public HTTP or HTTPS URL.
+
+        The URL must be reachable without authentication and cannot point to
+        localhost or a loopback address. FancyAlt returns only the selected
+        result.
+
+      requestBody:
+        required: true
+
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageUrlRequest'
+
+            examples:
+              concise:
+                summary: Concise alt text
+                value:
+                  imageUrl: https://images.example.com/kayak-dog.jpg
+                  mode: concise
+                  maxLength: 160
+                  includeVisibleText: true
+
+              detailed:
+                summary: Detailed description
+                value:
+                  imageUrl: https://images.example.com/spacecraft.jpg
+                  mode: detailed
+                  maxLength: 500
+                  includeVisibleText: false
+
+              social:
+                summary: Social media description
+                value:
+                  imageUrl: https://images.example.com/city-sunset.jpg
+                  mode: social
+                  maxLength: 250
+                  includeVisibleText: true
+
+              story:
+                summary: Short creative story
+                value:
+                  imageUrl: https://images.example.com/kayak-dog.jpg
+                  mode: story
+                  maxLength: 500
+                  includeVisibleText: false
+
+              moderationOnly:
+                summary: Safety check only
+                value:
+                  imageUrl: https://images.example.com/photo.jpg
+                  mode: moderateOnly
+
+      responses:
+        '200':
+          description: The public image URL was processed successfully.
+
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
+
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/GeneratedUrlResponse'
+                  - $ref: '#/components/schemas/ModerationOnlyUrlResponse'
+
+              examples:
+                concise:
+                  $ref: '#/components/examples/ConciseUrlResponse'
+
+                story:
+                  $ref: '#/components/examples/StoryUrlResponse'
+
+                moderationOnly:
+                  $ref: '#/components/examples/ModerationOnlyUrlResponse'
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+        '502':
+          $ref: '#/components/responses/BadGateway'
+
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /status:
+    get:
+      tags:
+        - Service
+
+      operationId: getStatus
+      summary: Check the API status
+
+      description: |
+        Returns service, version, environment, provider, uptime, and timestamp
+        information.
+
+      responses:
+        '200':
+          description: FancyAlt is running.
+
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+
+            RateLimit:
+              $ref: '#/components/headers/RateLimit'
+
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+
+              example:
+                status: ok
+                service: FancyAlt API
+                version: 2.0.0
+                provider: OpenAI
+                environment: production
+                uptimeSeconds: 86400
+                timestamp: '2026-07-11T19:30:00.000Z'
+
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  headers:
+    RequestId:
+      description: Unique identifier for the request.
+
+      schema:
+        type: string
+
+      example: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    RateLimit:
+      description: Current rate-limit information.
+
+      schema:
+        type: string
+
+      example: limit=25, remaining=24, reset=899
+
+    RateLimitPolicy:
+      description: Rate-limit policy applied to the request.
+
+      schema:
+        type: string
+
+      example: 25;w=900
+
+    RetryAfter:
+      description: Suggested number of seconds to wait before retrying.
+
+      schema:
+        type: integer
+        minimum: 1
+
+      example: 30
+
+  responses:
+    BadRequest:
+      description: The request is missing required data or contains invalid values.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          examples:
+            missingImage:
+              summary: Missing uploaded image
+              value:
+                error: An image file is required.
+                requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+            invalidMode:
+              summary: Invalid result mode
+              value:
+                error: Validation failed.
+                requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+                details:
+                  - field: mode
+                    location: body
+                    message: 'Mode must be one of: concise, detailed, social, story, moderateOnly.'
+                    value: invalid
+
+    Forbidden:
+      description: The request origin or requested resource is not allowed.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: Requests from this origin are not allowed.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    PayloadTooLarge:
+      description: The uploaded image is larger than 5 MB.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: File size exceeds the 5MB limit.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    UnsupportedMediaType:
+      description: The uploaded file is not a supported image type.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: Only JPEG, PNG, and WEBP image files are allowed.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    UnprocessableEntity:
+      description: The image could not be retrieved or processed.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: The image could not be analyzed at this time.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    TooManyRequests:
+      description: The client exceeded FancyAlt's API rate limit.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+        RateLimit:
+          $ref: '#/components/headers/RateLimit'
+
+        RateLimit-Policy:
+          $ref: '#/components/headers/RateLimitPolicy'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: Rate limit exceeded. Please wait and try again shortly.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    BadGateway:
+      description: An upstream service returned an invalid response.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: The image safety service returned an invalid response.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    ServiceUnavailable:
+      description: OpenAI authentication, rate limiting, or service availability prevented processing.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: The selected image-analysis service is temporarily rate-limited. Please wait and try again.
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+    InternalServerError:
+      description: An unexpected server error occurred.
+
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+          example:
+            error: Internal Server Error
+            requestId: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+  schemas:
+    AnalysisMode:
+      type: string
+      description: Result type to generate for the image.
+
+      enum:
+        - concise
+        - detailed
+        - social
+        - story
+        - moderateOnly
+
+      default: concise
+      example: concise
+
+    GeneratedMode:
+      type: string
+      description: Mode that produces generated text.
+
+      enum:
+        - concise
+        - detailed
+        - social
+        - story
+
+      example: concise
+
+    UploadImageRequest:
+      type: object
+
+      required:
+        - image
+
+      properties:
+        image:
+          type: string
+          format: binary
+          description: JPEG, PNG, or WEBP image no larger than 5 MB.
+
+        mode:
+          $ref: '#/components/schemas/AnalysisMode'
+
+        maxLength:
+          type: integer
+          minimum: 40
+          maximum: 1000
+          description: Preferred maximum length for the selected generated text.
+          example: 160
+
+        includeVisibleText:
+          type: boolean
+          default: true
+          description: |
+            Whether meaningful readable text should be extracted. When enabled,
+            visible-text fields are included in the same mode-specific request.
+            This option does not apply to `moderateOnly`.
+          example: true
+
+    ImageUrlRequest:
+      type: object
+
+      required:
+        - imageUrl
+
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: Public HTTP or HTTPS URL pointing to an image.
+          example: https://images.example.com/kayak-dog.jpg
+
+        mode:
+          $ref: '#/components/schemas/AnalysisMode'
+
+        maxLength:
+          type: integer
+          minimum: 40
+          maximum: 1000
+          description: Preferred maximum length for the selected generated text.
+          example: 160
+
+        includeVisibleText:
+          type: boolean
+          default: true
+          description: |
+            Whether meaningful readable text should be extracted. When enabled,
+            visible-text fields are included in the same mode-specific request.
+            This option does not apply to `moderateOnly`.
+          example: true
+
+    GeneratedOutput:
+      type: object
+
+      required:
+        - text
+        - model
+
+      properties:
+        text:
+          type: string
+          description: |
+            The single result requested by `mode`: concise alt text, a detailed
+            description, a social media description, or a short story.
+          example: Golden retriever sitting beside a blue kayak at the edge of a calm lake.
+
+        model:
+          type: string
+          description: OpenAI model used for the generated output.
+          example: gpt-5.4-mini
+
+        containsText:
+          type: boolean
+          description: |
+            Whether meaningful readable text was detected. Present only when
+            `includeVisibleText` is enabled.
+          example: false
+
+        visibleText:
+          type: array
+          description: |
+            Meaningful readable text detected in the image. Present only when
+            `includeVisibleText` is enabled.
+
+          items:
+            type: string
+
+          example: []
+
+    ModerationResult:
+      type: object
+
+      required:
+        - flagged
+        - flaggedCategories
+        - categories
+        - categoryScores
+        - appliedInputTypes
+        - model
+
+      properties:
+        flagged:
+          type: boolean
+          description: Whether the moderation service flagged the image.
+          example: false
+
+        flaggedCategories:
+          type: array
+          description: Moderation categories that were flagged.
+
+          items:
+            type: string
+
+          example: []
+
+        categories:
+          type: object
+          description: Category names mapped to boolean flag values.
+
+          additionalProperties:
+            type: boolean
+
+          example:
+            sexual: false
+            violence: false
+            self-harm: false
+
+        categoryScores:
+          type: object
+          description: Category names mapped to moderation confidence scores.
+
+          additionalProperties:
+            type: number
+            format: double
+
+          example:
+            sexual: 0.00012
+            violence: 0.00048
+            self-harm: 0.00001
+
+        appliedInputTypes:
+          type: object
+          description: Category names mapped to evaluated input types.
+
+          additionalProperties:
+            type: array
+
+            items:
+              type: string
+
+              enum:
+                - text
+                - image
+
+          example:
+            sexual:
+              - image
+
+            violence:
+              - image
+
+        model:
+          type: string
+          description: OpenAI moderation model used for the request.
+          example: omni-moderation-latest
+
+    GeneratedResponse:
+      type: object
+
+      required:
+        - mode
+        - flagged
+        - moderation
+        - output
+
+      properties:
+        mode:
+          $ref: '#/components/schemas/GeneratedMode'
+
+        flagged:
+          type: boolean
+          example: false
+
+        moderation:
+          $ref: '#/components/schemas/ModerationResult'
+
+        output:
+          $ref: '#/components/schemas/GeneratedOutput'
+
+    ModerationOnlyResponse:
+      type: object
+
+      required:
+        - mode
+        - flagged
+        - moderation
+
+      properties:
+        mode:
+          type: string
+
+          enum:
+            - moderateOnly
+
+          example: moderateOnly
+
+        flagged:
+          type: boolean
+          example: false
+
+        moderation:
+          $ref: '#/components/schemas/ModerationResult'
+
+    GeneratedUrlResponse:
+      allOf:
+        - $ref: '#/components/schemas/GeneratedResponse'
+
+        - type: object
+
+          required:
+            - imageUrl
+
+          properties:
+            imageUrl:
+              type: string
+              format: uri
+              example: https://images.example.com/kayak-dog.jpg
+
+    ModerationOnlyUrlResponse:
+      allOf:
+        - $ref: '#/components/schemas/ModerationOnlyResponse'
+
+        - type: object
+
+          required:
+            - imageUrl
+
+          properties:
+            imageUrl:
+              type: string
+              format: uri
+              example: https://images.example.com/photo.jpg
+
+    ValidationError:
+      type: object
+
+      required:
+        - field
+        - location
+        - message
+
+      properties:
+        field:
+          type: string
+          nullable: true
+          example: mode
+
+        location:
+          type: string
+          nullable: true
+          example: body
+
+        message:
+          type: string
+          example: Mode must be one of the supported values.
+
+        value:
+          nullable: true
+          description: Invalid value received from the client.
+          example: invalid
+
+    ErrorResponse:
+      type: object
+
+      required:
+        - error
+        - requestId
+
+      properties:
+        error:
+          type: string
+          description: Safe, human-readable error message.
+          example: Validation failed.
+
+        requestId:
+          type: string
+          description: Identifier that can be used to trace the failed request.
+          example: 1c8ca594-8758-4c97-bb86-49cff66704f8
+
+        details:
+          description: Optional validation or processing details.
+          nullable: true
+
+          oneOf:
+            - type: array
+
+              items:
+                $ref: '#/components/schemas/ValidationError'
+
+            - type: object
+              additionalProperties: true
+
+    StatusResponse:
+      type: object
+
+      required:
+        - status
+        - service
+        - version
+        - provider
+        - environment
+        - uptimeSeconds
+        - timestamp
+
+      properties:
+        status:
+          type: string
+
+          enum:
+            - ok
+
+          example: ok
+
+        service:
+          type: string
+          example: FancyAlt API
+
+        version:
+          type: string
+          example: 2.0.0
+
+        provider:
+          type: string
+
+          enum:
+            - OpenAI
+
+          example: OpenAI
+
+        environment:
+          type: string
+          example: production
+
+        uptimeSeconds:
+          type: integer
+          minimum: 0
+          example: 86400
+
+        timestamp:
+          type: string
+          format: date-time
+          example: '2026-07-11T19:30:00.000Z'
+
+  examples:
+    ConciseUploadResponse:
+      summary: Concise alt-text response
+
+      value:
+        mode: concise
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+
+          categories:
+            sexual: false
+            violence: false
+            self-harm: false
+
+          categoryScores:
+            sexual: 0.00012
+            violence: 0.00048
+            self-harm: 0.00001
+
+          appliedInputTypes:
+            sexual:
+              - image
+
+            violence:
+              - image
+
+          model: omni-moderation-latest
+
+        output:
+          text: Golden retriever sitting beside a blue kayak at the edge of a calm lake.
+          model: gpt-5.4-mini
+          containsText: false
+          visibleText: []
+
+    DetailedUploadResponse:
+      summary: Detailed visual-description response
+
+      value:
+        mode: detailed
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest
+
+        output:
+          text: A golden retriever sits on a rocky shoreline beside a blue kayak, with still water and forested hills in the background.
+          model: gpt-5.4-mini
+
+    SocialUploadResponse:
+      summary: Social media-description response
+
+      value:
+        mode: social
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest
+
+        output:
+          text: A golden retriever waits beside a blue kayak on a peaceful lakeshore.
+          model: gpt-5.4-mini
+          containsText: false
+          visibleText: []
+
+    StoryUploadResponse:
+      summary: Story response
+
+      value:
+        mode: story
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest
+
+        output:
+          text: The retriever waited beside the kayak as the lake turned gold in the evening light. One quiet paddle remained before home.
+          model: gpt-5.4-mini
+
+    ModerationOnlyUploadResponse:
+      summary: Moderation-only response
+
+      value:
+        mode: moderateOnly
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest
+
+    ConciseUrlResponse:
+      summary: URL concise alt-text response
+
+      value:
+        mode: concise
+        imageUrl: https://images.example.com/kayak-dog.jpg
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest
+
+        output:
+          text: Golden retriever sitting beside a blue kayak at the edge of a calm lake.
+          model: gpt-5.4-mini
+          containsText: false
+          visibleText: []
+
+    StoryUrlResponse:
+      summary: URL story response
+
+      value:
+        mode: story
+        imageUrl: https://images.example.com/kayak-dog.jpg
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest
+
+        output:
+          text: The retriever waited beside the kayak as the lake turned gold in the evening light. One quiet paddle remained before home.
+          model: gpt-5.4-mini
+
+    ModerationOnlyUrlResponse:
+      summary: URL moderation-only response
+
+      value:
+        mode: moderateOnly
+        imageUrl: https://images.example.com/photo.jpg
+        flagged: false
+
+        moderation:
+          flagged: false
+          flaggedCategories: []
+          categories: {}
+          categoryScores: {}
+          appliedInputTypes: {}
+          model: omni-moderation-latest

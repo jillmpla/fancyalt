@@ -1,0 +1,51 @@
+{
+  "name": "fancyalt",
+  "version": "2.0.0",
+  "description": "Accessibility-focused API for AI image descriptions, alt text, storytelling, and content moderation",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node --test",
+    "check": "node --check index.js"
+  },
+  "keywords": [
+    "ai",
+    "alt text",
+    "accessibility",
+    "image analysis",
+    "image descriptions",
+    "captioning",
+    "storytelling",
+    "content moderation",
+    "openai"
+  ],
+  "author": "Jill Platts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.2.0",
+    "jsoneditor": "^10.4.3",
+    "multer": "^2.2.0",
+    "openai": "^6.46.0",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "scarfSettings": {
+    "enabled": false
+  },
+  "allowScripts": {
+    "@scarf/scarf": false
+  }
+}

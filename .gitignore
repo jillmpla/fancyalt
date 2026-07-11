@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Node process files
+*.pid
+*.pid.lock
+*.seed
+pids/
+
+# Temporary and cache files
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+.eslintcache
+
+# Test and coverage output
+coverage/
+.nyc_output/
+test-results/
+
+# Generated build output
+dist/
+build/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.history/
+
+# Git conflict and patch files
+*.orig
+*.rej
+
+# Local process managers and deployment tools
+.pm2/
+.vercel/
+.netlify/

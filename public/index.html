@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FancyAlt | AI Image Descriptions</title>
+
+    <meta
+        name="description"
+        content="Generate accessible alt text, detailed image descriptions, visible text, creative stories, and image safety results."
+    >
+    <meta name="theme-color" content="#8b1cf4">
+
+    <link rel="canonical" href="https://fancyalt.com/">
+
+    <meta property="og:title" content="FancyAlt | AI Image Descriptions">
+    <meta
+        property="og:description"
+        content="Create clear, useful image descriptions with AI."
+    >
+    <meta property="og:image" content="https://fancyalt.com/og-preview.png">
+    <meta property="og:url" content="https://fancyalt.com/">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/vendor/jsoneditor/jsoneditor.min.css">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/footer.css">
+
+    <script src="/vendor/jsoneditor/jsoneditor.min.js" defer></script>
+    <script src="/js/app.js" defer></script>
+    <script src="/footer.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#analyzer">
+        Skip to image analyzer
+    </a>
+
+    <header class="site-header">
+        <div class="site-header__inner">
+            <a class="brand" href="/" aria-label="FancyAlt home">
+                <img
+                    class="brand__logo"
+                    src="/icon.png"
+                    alt=""
+                    width="44"
+                    height="44"
+                >
+                <span>FancyAlt</span>
+            </a>
+
+            <div class="header-actions">
+                <a class="header-link" href="/api-docs">
+                    <i class="fa-solid fa-code" aria-hidden="true"></i>
+                    <span>API Docs</span>
+                </a>
+
+                <button
+                    class="theme-toggle"
+                    id="themeToggle"
+                    type="button"
+                    aria-label="Switch to dark theme"
+                    aria-pressed="false"
+                >
+                    <i
+                        class="fa-solid fa-moon"
+                        id="themeIcon"
+                        aria-hidden="true"
+                    ></i>
+                    <span id="themeLabel">Dark</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent" class="page-shell">
+        <section class="hero" aria-labelledby="heroTitle">
+            <div class="hero__copy">
+                <p class="hero__kicker">
+                    AI image descriptions made simple
+                </p>
+
+                <h1 id="heroTitle">
+                    See the image.
+                    <span>Share the meaning.</span>
+                </h1>
+
+                <p class="hero__description">
+                    Upload an image or paste a public URL. Choose the
+                    result you want and FancyAlt handles the rest.
+                </p>
+
+                <div class="hero__chips" aria-label="FancyAlt features">
+                    <span>Alt text</span>
+                    <span>Detailed descriptions</span>
+                    <span>Stories</span>
+                    <span>Safety checks</span>
+                </div>
+            </div>
+
+            <div class="hero__art" aria-hidden="true">
+                <!-- <div class="hero__glow"></div> -->
+                <img src="/bob.png" alt="">
+            </div>
+        </section>
+
+        <section
+            class="analyzer-card"
+            id="analyzer"
+            aria-labelledby="workspaceTitle"
+        >
+            <div class="analyzer-card__heading">
+                <div>
+                    <p class="section-label">Image analyzer</p>
+                    <h2 id="workspaceTitle">Describe an image</h2>
+                </div>
+            </div>
+
+            <div
+                class="source-tabs"
+                role="tablist"
+                aria-label="Choose image source"
+            >
+                <button
+                    class="source-tab active"
+                    id="uploadTab"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="uploadPanel"
+                    tabindex="0"
+                    data-panel="uploadPanel"
+                >
+                    <i
+                        class="fa-solid fa-arrow-up-from-bracket"
+                        aria-hidden="true"
+                    ></i>
+                    Upload
+                </button>
+
+                <button
+                    class="source-tab"
+                    id="urlTab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="urlPanel"
+                    tabindex="-1"
+                    data-panel="urlPanel"
+                >
+                    <i class="fa-solid fa-link" aria-hidden="true"></i>
+                    Image URL
+                </button>
+            </div>
+
+            <form id="analysisForm" novalidate>
+                <div
+                    id="uploadPanel"
+                    class="source-panel"
+                    role="tabpanel"
+                    aria-labelledby="uploadTab"
+                >
+                    <label
+                        class="upload-zone"
+                        id="uploadZone"
+                        for="imageInput"
+                        tabindex="0"
+                    >
+                        <input
+                            id="imageInput"
+                            name="image"
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            aria-describedby="uploadHelp"
+                        >
+
+                        <span class="upload-zone__icon">
+                            <i
+                                class="fa-regular fa-image"
+                                aria-hidden="true"
+                            ></i>
+                        </span>
+
+                        <strong>Drop an image here</strong>
+                        <span>or click to choose one</span>
+
+                        <small id="uploadHelp">
+                            JPEG, PNG, or WEBP · 5 MB max
+                        </small>
+                    </label>
+
+                    <div class="image-preview" id="imagePreview" hidden>
+                        <img
+                            id="previewImage"
+                            src=""
+                            alt="Selected image preview"
+                        >
+
+                        <div class="image-preview__details">
+                            <strong id="previewName"></strong>
+                            <span id="previewSize"></span>
+                        </div>
+
+                        <button
+                            class="icon-button"
+                            id="removeImageButton"
+                            type="button"
+                            aria-label="Remove selected image"
+                        >
+                            <i
+                                class="fa-solid fa-xmark"
+                                aria-hidden="true"
+                            ></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    id="urlPanel"
+                    class="source-panel"
+                    role="tabpanel"
+                    aria-labelledby="urlTab"
+                    hidden
+                >
+                    <div class="field-group">
+                        <label for="imageUrl">Public image URL</label>
+
+                        <div class="input-with-icon">
+                            <i
+                                class="fa-solid fa-link"
+                                aria-hidden="true"
+                            ></i>
+
+                            <input
+                                id="imageUrl"
+                                name="imageUrl"
+                                type="url"
+                                inputmode="url"
+                                autocomplete="url"
+                                placeholder="https://example.com/image.jpg"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label for="mode">Result type</label>
+
+                        <select
+                            id="mode"
+                            name="mode"
+                            aria-describedby="modeHelp"
+                        >
+                            <option value="concise">
+                                Concise alt text
+                            </option>
+
+                            <option value="detailed">
+                                Detailed description
+                            </option>
+
+                            <option value="social">
+                                Social media description
+                            </option>
+
+                            <option value="story">
+                                Creative story
+                            </option>
+
+                            <option value="moderateOnly">
+                                Safety check only
+                            </option>
+                        </select>
+
+                        <p class="field-help" id="modeHelp">
+                            Short alt text for everyday use.
+                        </p>
+                    </div>
+
+                    <div class="field-group" id="lengthField">
+                        <label for="maxLength">Length</label>
+
+                        <select id="maxLength" name="maxLength">
+                            <option value="">
+                                Let FancyAlt decide
+                            </option>
+
+                            <option value="125">
+                                About 125 characters
+                            </option>
+
+                            <option value="160">
+                                About 160 characters
+                            </option>
+
+                            <option value="250">
+                                About 250 characters
+                            </option>
+
+                            <option value="500">
+                                Up to 500 characters
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <label class="checkbox-row" id="visibleTextField">
+                    <input
+                        id="includeVisibleText"
+                        name="includeVisibleText"
+                        type="checkbox"
+                    >
+
+                    <span>
+                        Extract all text shown in the image.
+                    </span>
+                </label>
+
+                <div
+                    class="form-alert"
+                    id="formAlert"
+                    role="alert"
+                    aria-live="assertive"
+                    hidden
+                ></div>
+
+                <button
+                    class="analyze-button"
+                    id="analyzeButton"
+                    type="submit"
+                >
+                    <span class="button-content">
+                        <i
+                            class="fa-solid fa-wand-magic-sparkles"
+                            aria-hidden="true"
+                        ></i>
+                        Analyze image
+                    </span>
+
+                    <span class="button-loading" aria-hidden="true">
+                        <span class="spinner"></span>
+                        Analyzing…
+                    </span>
+                </button>
+            </form>
+        </section>
+
+        <section
+            class="results-section"
+            id="resultsSection"
+            aria-labelledby="resultsTitle"
+            aria-live="polite"
+            tabindex="-1"
+            hidden
+        >
+            <div class="results-heading">
+                <div>
+                    <p class="section-label">Complete</p>
+                    <h2 id="resultsTitle">Your result</h2>
+                </div>
+
+                <button
+                    class="secondary-button"
+                    id="newAnalysisButton"
+                    type="button"
+                >
+                    <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+                    Start over
+                </button>
+            </div>
+
+            <div
+                class="safety-banner"
+                id="safetyBanner"
+                hidden
+            ></div>
+
+            <div class="results-grid" id="humanResults"></div>
+
+            <details class="raw-results">
+                <summary>
+                    <span>
+                        <i
+                            class="fa-solid fa-code"
+                            aria-hidden="true"
+                        ></i>
+                        API response
+                    </span>
+
+                    <i
+                        class="fa-solid fa-chevron-down summary-chevron"
+                        aria-hidden="true"
+                    ></i>
+                </summary>
+
+                <div id="jsonTree" class="json-output"></div>
+            </details>
+        </section>
+    </main>
+
+    <div
+        class="toast-message"
+        id="toastMessage"
+        role="status"
+        aria-live="polite"
+        hidden
+    ></div>
+</body>
+</html>
