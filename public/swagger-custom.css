@@ -636,7 +636,7 @@ body,
     opacity: 1 !important;
 }
 
-/* Individual schema cards */
+/* Schema cards */
 
 .swagger-ui section.models .model-container {
     display: block !important;
@@ -653,7 +653,7 @@ body,
     border: 1px solid #d8c9e2 !important;
     border-radius: 10px !important;
 
-    background: var(--surface) !important;
+    background: #faf7fc !important;
     color: var(--text) !important;
 
     box-shadow: none !important;
@@ -669,14 +669,20 @@ body,
 
 .swagger-ui section.models .model-container:hover {
     border-color: #b994d2 !important;
-    background: var(--surface) !important;
 }
 
-/*
- * Reset Swagger's built-in model-box display, background, and sizing.
- */
-
-.swagger-ui section.models .model-container > .model-box {
+.swagger-ui section.models
+.model-container > .model-box,
+.swagger-ui section.models
+.model-container > .model-box > .model-box,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span,
+.swagger-ui section.models
+.model-container > .model-box > .model,
+.swagger-ui section.models
+.model-container > .model-box > .model > span {
     display: block !important;
 
     width: 100% !important;
@@ -692,17 +698,54 @@ body,
     border: 0 !important;
     border-radius: 0 !important;
 
-    background: var(--surface) !important;
-    color: var(--text) !important;
-    -webkit-text-fill-color: var(--text) !important;
-
+    background: transparent !important;
     box-shadow: none !important;
 }
 
-/* Collapsed and expanded schema header */
+/* General nested schema controls */
+
+.swagger-ui section.models .model button.model-box-control {
+    all: unset !important;
+
+    box-sizing: border-box !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+
+    min-width: 0 !important;
+    min-height: 34px !important;
+
+    margin: 0 0.85rem 0 0 !important;
+    padding: 0.2rem 0.35rem !important;
+
+    border-radius: 7px !important;
+
+    background: transparent !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    cursor: pointer !important;
+    vertical-align: middle !important;
+}
+
+.swagger-ui section.models .model button.model-box-control:hover {
+    background: var(--brand-soft) !important;
+}
+
+.swagger-ui section.models .model button.model-box-control:focus-visible {
+    outline: none !important;
+    box-shadow: var(--focus) !important;
+}
+
+/* Top-level controls in both DOM states */
 
 .swagger-ui section.models
-.model-container > .model-box > button.model-box-control {
+.model-container > .model-box > button.model-box-control,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control {
     all: unset !important;
 
     box-sizing: border-box !important;
@@ -716,7 +759,7 @@ body,
     min-height: 58px !important;
 
     margin: 0 !important;
-    padding: 0.9rem 4.25rem 0.9rem 1rem !important;
+    padding: 0.9rem 4.5rem 0.9rem 1rem !important;
 
     border: 0 !important;
     border-radius: 9px !important;
@@ -729,48 +772,81 @@ body,
 }
 
 .swagger-ui section.models
-.model-container > .model-box > button.model-box-control:hover {
+.model-container > .model-box > button.model-box-control:hover,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control:hover,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control:hover {
     background: var(--brand-soft) !important;
 }
 
 .swagger-ui section.models
-.model-container > .model-box > button.model-box-control:focus-visible {
+.model-container > .model-box > button.model-box-control:focus-visible,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control:focus-visible,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control:focus-visible {
     outline: none !important;
     box-shadow: inset var(--focus) !important;
 }
 
-
-/* Keep each main schema arrow aligned at the far right */
+/* Normalize the title wrapper used before a schema is opened */
 
 .swagger-ui section.models
-.model-container > .model-box > button.model-box-control > .model-toggle {
-    position: absolute !important;
-    top: 50% !important;
-    right: 1rem !important;
-    left: auto !important;
+.model-container > .model-box > button.model-box-control > .pointer,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control > .pointer,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control > .pointer {
+    display: inline-flex !important;
+    align-items: center !important;
+
+    width: auto !important;
+    min-width: 0 !important;
 
     margin: 0 !important;
+    padding: 0 !important;
 
-    transform: translateY(-50%) !important;
+    line-height: 1.35 !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control > .pointer > .model-box {
+    display: inline-flex !important;
+    align-items: center !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control .model.model-title,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control .model-title,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control .model-title {
+    display: inline !important;
+
+    width: auto !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: transparent !important;
 }
 
 /* Schema names */
 
 .swagger-ui section.models .model-title,
 .swagger-ui section.models .model-title__text,
-.swagger-ui section.models button.model-box-control > span:first-child {
-    display: inline !important;
-
-    width: auto !important;
-    max-width: none !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    border: 0 !important;
-    border-radius: 0 !important;
-
-    background: transparent !important;
+.swagger-ui section.models .model-container .pointer {
     color: var(--text) !important;
     -webkit-text-fill-color: var(--text) !important;
 
@@ -779,20 +855,34 @@ body,
         Arial,
         sans-serif !important;
 
-    font-size: 1.05rem !important;
     font-weight: 750 !important;
-    line-height: 1.35 !important;
-
     opacity: 1 !important;
-    box-shadow: none !important;
     text-shadow: none !important;
 }
 
-/* Expand and collapse arrows */
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control .model-title,
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control .model-title__text,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control .model-title,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control .model-title__text,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control .model-title,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control .model-title__text {
+    font-size: 1.05rem !important;
+    line-height: 1.35 !important;
+}
+
+/* Disclosure arrows */
 
 .swagger-ui section.models .model-toggle {
     position: relative !important;
     top: auto !important;
+    right: auto !important;
+    left: auto !important;
 
     display: inline-grid !important;
     place-items: center !important;
@@ -801,13 +891,17 @@ body,
 
     width: 30px !important;
     height: 30px !important;
-    margin: 0 0 0 0.75rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
     border: 1px solid #cdb7dc !important;
     border-radius: 50% !important;
 
     background-color: var(--brand-soft) !important;
     background-image: none !important;
+
+    font-size: 0 !important;
+    line-height: 0 !important;
 
     opacity: 1 !important;
     transform: none !important;
@@ -837,50 +931,87 @@ body,
     background-color: #e8d9ff !important;
 }
 
+/* Pin top-level arrows to the right in both DOM states */
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control > .model-toggle,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control > .model-toggle,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control > .model-toggle {
+    position: absolute !important;
+    top: 50% !important;
+    right: 1rem !important;
+    left: auto !important;
+
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 !important;
+
+    transform: translateY(-50%) !important;
+}
+
+/* Hide the compact preview so a closed schema keeps the card design */
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control > .model-toggle + span,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control > .model-toggle + span,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control > .model-toggle + span {
+    display: none !important;
+}
+
+/* Space nested arrows from titles, types, braces, and previews */
+
+.swagger-ui section.models .model button.model-box-control > .model-toggle + span {
+    margin-left: 0 !important;
+}
+
+.swagger-ui section.models .model button.model-box-control + .prop,
+.swagger-ui section.models .model button.model-box-control + .brace-open,
+.swagger-ui section.models .model button.model-box-control + .inner-object,
+.swagger-ui section.models .model button.model-box-control + span {
+    margin-left: 0.25rem !important;
+}
+
+.swagger-ui section.models .model-title + .model-toggle,
+.swagger-ui section.models .model-title__text + .model-toggle,
+.swagger-ui section.models .prop-name + .model-toggle,
+.swagger-ui section.models .prop-type + .model-toggle {
+    margin-left: 0.75rem !important;
+}
+
+.swagger-ui section.models .model-toggle + .prop-type,
+.swagger-ui section.models .model-toggle + .prop-name,
+.swagger-ui section.models .model-toggle + .model-title,
+.swagger-ui section.models .model-toggle + .model-title__text,
+.swagger-ui section.models .model-toggle + .brace-open,
+.swagger-ui section.models .model-toggle + span {
+    margin-left: 0.75rem !important;
+}
+
 /* Expanded schema body */
 
 .swagger-ui section.models
-.model-container > .model-box > .model {
-    display: block !important;
-
-    width: 100% !important;
-    max-width: none !important;
-    min-width: 0 !important;
-    max-height: none !important;
-
-    margin: 0 !important;
-    padding: 1rem 1.1rem !important;
-
-    overflow: visible !important;
-
-    border-top: 1px solid var(--border) !important;
-
+.model-container > .model-box > .model-box > .model > span > button.model-box-control ~ *,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control ~ * {
     background: var(--surface) !important;
-    color: var(--text-secondary) !important;
-    -webkit-text-fill-color: var(--text-secondary) !important;
-
-    font-family:
-        Consolas,
-        "Courier New",
-        monospace !important;
-
-    font-size: 0.9rem !important;
-    font-weight: 500 !important;
-    line-height: 1.55 !important;
 }
 
-/* Remove dark backgrounds from every nested schema element */
+.swagger-ui section.models .model .brace-open,
+.swagger-ui section.models .model .brace-close {
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
+}
 
-.swagger-ui section.models .model,
-.swagger-ui section.models .model-box,
-.swagger-ui section.models .property-row,
-.swagger-ui section.models table,
-.swagger-ui section.models tbody,
-.swagger-ui section.models tr,
-.swagger-ui section.models td {
-    background-color: transparent !important;
-    color: var(--text-secondary) !important;
-    -webkit-text-fill-color: var(--text-secondary) !important;
+.swagger-ui section.models .model .brace-open {
+    margin-left: 0.7rem !important;
+}
+
+.swagger-ui section.models .model .brace-close {
+    margin-right: 0.7rem !important;
 }
 
 /* Property layout */
@@ -912,8 +1043,7 @@ body,
         minmax(0, 1fr) !important;
 
     width: 100% !important;
-
-    padding: 0.8rem 0 !important;
+    padding: 0.85rem 0 !important;
 
     border-bottom: 1px solid #ece4f0 !important;
 }
@@ -931,11 +1061,14 @@ table.model tr.property-row:last-child {
     min-width: 0 !important;
 
     margin: 0 !important;
-    padding: 0 0.65rem !important;
+    padding: 0 0.8rem !important;
 
     border: 0 !important;
 
     background: transparent !important;
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
+
     vertical-align: top !important;
 }
 
@@ -944,20 +1077,9 @@ table.model tr.property-row > td:first-child {
     padding-left: 0 !important;
 }
 
-/* Property names and types */
-
 .swagger-ui section.models .prop-name {
-    display: inline-block !important;
-
-    margin: 0 !important;
-
     color: var(--text) !important;
     -webkit-text-fill-color: var(--text) !important;
-
-    font-family:
-        Consolas,
-        "Courier New",
-        monospace !important;
 
     font-size: 0.92rem !important;
     font-weight: 750 !important;
@@ -970,122 +1092,15 @@ table.model tr.property-row > td:first-child {
     color: var(--brand-hover) !important;
     -webkit-text-fill-color: var(--brand-hover) !important;
 
-    font-size: 0.88rem !important;
+    font-size: 0.9rem !important;
     font-weight: 750 !important;
 }
 
 .swagger-ui section.models .prop-format,
 .swagger-ui section.models .property,
-.swagger-ui section.models .description,
-.swagger-ui section.models .brace-open,
-.swagger-ui section.models .brace-close {
+.swagger-ui section.models .description {
     color: var(--text-muted) !important;
     -webkit-text-fill-color: var(--text-muted) !important;
-}
-
-/* Nested referenced schemas */
-
-.swagger-ui section.models .model .model-box {
-    display: inline-block !important;
-
-    width: auto !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    margin: 0.15rem 0 !important;
-    padding: 0 !important;
-
-    overflow: visible !important;
-
-    border: 0 !important;
-    border-radius: 0 !important;
-
-    background: transparent !important;
-
-    box-shadow: none !important;
-    vertical-align: middle !important;
-}
-
-.swagger-ui section.models
-.model .model-box > button.model-box-control {
-    all: unset !important;
-
-    box-sizing: border-box !important;
-
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 0.8rem !important;
-
-    width: auto !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    min-height: 34px !important;
-
-    margin: 0 !important;
-    padding: 0.35rem 0.6rem !important;
-
-    border: 1px solid #d7c6e2 !important;
-    border-radius: 7px !important;
-
-    background: #f7f1fb !important;
-    color: var(--text) !important;
-    -webkit-text-fill-color: var(--text) !important;
-
-    cursor: pointer !important;
-}
-
-.swagger-ui section.models
-.model .model-box > button.model-box-control:hover {
-    border-color: #b58bd1 !important;
-    background: var(--brand-soft) !important;
-}
-
-.swagger-ui section.models
-.model .model-box > button.model-box-control:focus-visible {
-    outline: none !important;
-    box-shadow: var(--focus) !important;
-}
-
-.swagger-ui section.models .model .model-title,
-.swagger-ui section.models .model .model-title__text {
-    font-size: 0.9rem !important;
-    font-weight: 700 !important;
-}
-
-.swagger-ui section.models .model .model-toggle {
-    flex: 0 0 auto !important;
-
-    width: 24px !important;
-    height: 24px !important;
-    margin: 0 0.7rem 0 0 !important;
-
-    border: 0 !important;
-    background-color: transparent !important;
-}
-
-/*
- * When the nested arrow is already inside its button, the button's
- * gap provides the spacing. This prevents the two values from stacking.
- */
-.swagger-ui section.models
-.model .model-box > button.model-box-control > .model-toggle {
-    margin: 0 !important;
-}
-
-/*
- * Some Swagger schema controls place the arrow immediately before the
- * type or label instead of inside the button. Keep those readable too.
- */
-.swagger-ui section.models .model-toggle + .prop-type,
-.swagger-ui section.models .model-toggle + .model-title,
-.swagger-ui section.models .model-toggle + .model-title__text,
-.swagger-ui section.models .model-toggle + span {
-    margin-left: 0.15rem !important;
-}
-
-.swagger-ui section.models .model .model-toggle::after {
-    width: 6px !important;
-    height: 6px !important;
 }
 
 /* Enum values and inline code */
@@ -1094,7 +1109,7 @@ table.model tr.property-row > td:first-child {
 .swagger-ui section.models .model code {
     display: inline-block !important;
 
-    margin: 0.1rem 0.12rem !important;
+    margin: 0.1rem 0.25rem !important;
     padding: 0.2rem 0.42rem !important;
 
     border: 1px solid #61406f !important;
@@ -1130,24 +1145,27 @@ table.model tr.property-row > td:first-child {
     }
 
     .swagger-ui section.models
-    .model-container > .model-box > button.model-box-control {
+    .model-container > .model-box > button.model-box-control,
+    .swagger-ui section.models
+    .model-container > .model-box > .model-box > .model > span > button.model-box-control,
+    .swagger-ui section.models
+    .model-container > .model-box > .model > span > button.model-box-control {
         min-height: 54px !important;
-        padding: 0.75rem 3.75rem 0.75rem 0.8rem !important;
+        padding: 0.75rem 4rem 0.75rem 0.8rem !important;
     }
 
     .swagger-ui section.models
-    .model-container > .model-box > button.model-box-control > .model-toggle {
+    .model-container > .model-box > button.model-box-control > .model-toggle,
+    .swagger-ui section.models
+    .model-container > .model-box > .model-box > .model > span > button.model-box-control > .model-toggle,
+    .swagger-ui section.models
+    .model-container > .model-box > .model > span > button.model-box-control > .model-toggle {
         right: 0.8rem !important;
-    }
-
-    .swagger-ui section.models
-    .model-container > .model-box > .model {
-        padding: 0.75rem !important;
     }
 
     .swagger-ui section.models table.model tr.property-row {
         display: block !important;
-        padding: 0.65rem 0 !important;
+        padding: 0.7rem 0 !important;
     }
 
     .swagger-ui section.models
@@ -1223,8 +1241,6 @@ table.model tr.property-row > td:first-child {
 
 }
 
-/* Reduced motion */
-
 @media (prefers-reduced-motion: reduce) {
     .swagger-ui *,
     .swagger-ui *::before,
@@ -1232,5 +1248,459 @@ table.model tr.property-row > td:first-child {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+}
+
+:root {
+    --schema-text: #493f52;
+    --schema-muted: #5c5065;
+    --schema-soft-text: #6c6074;
+}
+
+.swagger-ui section.models .model .property,
+.swagger-ui section.models .model .property.primitive,
+.swagger-ui section.models .prop-format,
+.swagger-ui section.models .prop-enum,
+.swagger-ui section.models .model p,
+.swagger-ui section.models .model .description,
+.swagger-ui section.models table.model tr.description,
+.swagger-ui section.models .model .external-docs {
+    color: var(--schema-muted) !important;
+    -webkit-text-fill-color: var(--schema-muted) !important;
+
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+
+    opacity: 1 !important;
+}
+
+.swagger-ui section.models .prop-enum {
+    display: block !important;
+
+    width: 100% !important;
+    margin: 0.85rem 0 0.35rem !important;
+
+    color: var(--schema-text) !important;
+    -webkit-text-fill-color: var(--schema-text) !important;
+
+    font-style: normal !important;
+    font-weight: 700 !important;
+}
+
+.swagger-ui section.models .model .property.primitive {
+    color: var(--schema-soft-text) !important;
+    -webkit-text-fill-color: var(--schema-soft-text) !important;
+}
+
+.swagger-ui section.models .model p,
+.swagger-ui section.models .model .description {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 78ch !important;
+    margin: 0.55rem 0 0 !important;
+
+    color: var(--schema-text) !important;
+    -webkit-text-fill-color: var(--schema-text) !important;
+
+    font-style: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+.swagger-ui section.models .inner-object {
+    display: block !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    margin-top: 0.35rem !important;
+}
+
+.swagger-ui section.models table.model tr.property-row {
+    grid-template-columns:
+        minmax(130px, 180px)
+        minmax(0, 1fr) !important;
+
+    column-gap: 1rem !important;
+    row-gap: 0.35rem !important;
+
+    padding: 1rem 0 !important;
+}
+
+.swagger-ui section.models table.model tr.property-row > td {
+    min-width: 0 !important;
+    padding: 0 !important;
+}
+
+.swagger-ui section.models
+table.model tr.property-row > td:last-child {
+    display: flex !important;
+    align-items: flex-start !important;
+    align-content: flex-start !important;
+    flex-wrap: wrap !important;
+
+    min-width: 0 !important;
+
+    column-gap: 0.7rem !important;
+    row-gap: 0.35rem !important;
+
+    overflow-wrap: anywhere !important;
+}
+
+.swagger-ui section.models
+table.model tr.property-row > td:last-child > * {
+    max-width: 100% !important;
+}
+
+.swagger-ui section.models
+table.model tr.property-row > td:last-child > .property,
+.swagger-ui section.models
+table.model tr.property-row > td:last-child > .description,
+.swagger-ui section.models
+table.model tr.property-row > td:last-child > .prop-enum,
+.swagger-ui section.models
+table.model tr.property-row > td:last-child > p {
+    flex: 1 0 100% !important;
+}
+
+.swagger-ui section.models .prop-name,
+.swagger-ui section.models .prop-type,
+.swagger-ui section.models .prop-format,
+.swagger-ui section.models .model-title,
+.swagger-ui section.models .model-title__text {
+    white-space: nowrap !important;
+}
+
+.swagger-ui section.models .prop-name {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+
+    font-size: 0.94rem !important;
+}
+
+.swagger-ui section.models .prop-type {
+    margin-right: 0.15rem !important;
+
+    color: var(--brand-hover) !important;
+    -webkit-text-fill-color: var(--brand-hover) !important;
+
+    font-size: 0.94rem !important;
+}
+
+.swagger-ui section.models .model button.model-box-control {
+    gap: 0.7rem !important;
+
+    min-height: 38px !important;
+
+    margin: 0 0.55rem 0.2rem 0 !important;
+    padding: 0.3rem 0.55rem !important;
+
+    border: 1px solid #d8c5e5 !important;
+    border-radius: 8px !important;
+
+    background: #f7f1fb !important;
+}
+
+.swagger-ui section.models .model button.model-box-control:hover {
+    border-color: #b58bd1 !important;
+    background: var(--brand-soft) !important;
+}
+
+.swagger-ui section.models .model .model-toggle {
+    width: 30px !important;
+    height: 30px !important;
+
+    margin: 0 0.55rem !important;
+
+    border: 1px solid #cdb7dc !important;
+    background-color: var(--brand-soft) !important;
+}
+
+.swagger-ui section.models
+.model button.model-box-control > .model-toggle {
+    margin: 0 !important;
+}
+
+.swagger-ui section.models .model .model-toggle::after {
+    width: 7px !important;
+    height: 7px !important;
+
+    border-right-width: 2px !important;
+    border-bottom-width: 2px !important;
+}
+
+.swagger-ui section.models .model-toggle + .prop-type,
+.swagger-ui section.models .model-toggle + .prop-name,
+.swagger-ui section.models .model-toggle + .model-title,
+.swagger-ui section.models .model-toggle + .model-title__text,
+.swagger-ui section.models .model-toggle + .brace-open,
+.swagger-ui section.models .model-toggle + span {
+    margin-left: 0.55rem !important;
+}
+
+.swagger-ui section.models .model-title + .model-toggle,
+.swagger-ui section.models .model-title__text + .model-toggle,
+.swagger-ui section.models .prop-name + .model-toggle,
+.swagger-ui section.models .prop-type + .model-toggle {
+    margin-left: 0.55rem !important;
+}
+
+.swagger-ui section.models .prop-enum + .model-box,
+.swagger-ui section.models .prop-enum ~ .model-box {
+    margin-top: 0.25rem !important;
+}
+
+.swagger-ui section.models .model code {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+@media (max-width: 900px) {
+    .swagger-ui section.models table.model tr.property-row {
+        display: block !important;
+
+        padding: 0.9rem 0 !important;
+    }
+
+    .swagger-ui section.models
+    table.model tr.property-row > td {
+        display: block !important;
+
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+    }
+
+    .swagger-ui section.models
+    table.model tr.property-row > td:first-child {
+        margin-bottom: 0.55rem !important;
+    }
+
+    .swagger-ui section.models
+    table.model tr.property-row > td:last-child {
+        column-gap: 0.6rem !important;
+        row-gap: 0.4rem !important;
+    }
+}
+
+@media (max-width: 560px) {
+    .swagger-ui section.models .model-container {
+        margin-right: 0.45rem !important;
+        margin-left: 0.45rem !important;
+    }
+
+    .swagger-ui section.models
+    .model-container > .model-box > button.model-box-control,
+    .swagger-ui section.models
+    .model-container > .model-box > .model-box > .model > span > button.model-box-control,
+    .swagger-ui section.models
+    .model-container > .model-box > .model > span > button.model-box-control {
+        padding-right: 3.7rem !important;
+        padding-left: 0.75rem !important;
+    }
+
+    .swagger-ui section.models
+    .model-container > .model-box > button.model-box-control .model-title,
+    .swagger-ui section.models
+    .model-container > .model-box > button.model-box-control .model-title__text {
+        white-space: normal !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    .swagger-ui section.models .model {
+        font-size: 0.86rem !important;
+    }
+
+    .swagger-ui section.models .model button.model-box-control {
+        max-width: 100% !important;
+    }
+}
+
+.swagger-ui section.models
+.model-container > .model-box > .model {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+}
+
+.swagger-ui section.models .inner-object {
+    padding-right: 0.35rem !important;
+    padding-left: 0.35rem !important;
+}
+
+.swagger-ui section.models table.model tr.property-row {
+    padding-right: 0.35rem !important;
+    padding-left: 0.35rem !important;
+}
+
+.swagger-ui section.models .model > .brace-open,
+.swagger-ui section.models .model > .brace-close {
+    display: inline-block !important;
+    margin-left: 0.35rem !important;
+}
+
+@media (max-width: 700px) {
+    .swagger-ui section.models
+    .model-container > .model-box > .model {
+        padding-right: 1rem !important;
+        padding-left: 1rem !important;
+    }
+
+    .swagger-ui section.models table.model tr.property-row {
+        padding-right: 0.15rem !important;
+        padding-left: 0.15rem !important;
+    }
+}
+
+.swagger-ui section.models .model-container {
+    --schema-card-inset: 1.4rem;
+}
+
+.swagger-ui section.models
+.model-container > .model-box {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control {
+    width: 100% !important;
+
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+
+    padding-right: 4.65rem !important;
+    padding-left: var(--schema-card-inset) !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span,
+.swagger-ui section.models
+.model-container > .model-box > .model > span {
+    padding-right: var(--schema-card-inset) !important;
+    padding-left: var(--schema-card-inset) !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control {
+    width: calc(
+        100% + (var(--schema-card-inset) * 2)
+    ) !important;
+
+    margin-right: calc(
+        var(--schema-card-inset) * -1
+    ) !important;
+
+    margin-left: calc(
+        var(--schema-card-inset) * -1
+    ) !important;
+
+    padding-right: 4.65rem !important;
+    padding-left: var(--schema-card-inset) !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > .model-title,
+.swagger-ui section.models
+.model-container > .model-box > .model-title__text {
+    position: static !important;
+    left: auto !important;
+
+    margin-left: var(--schema-card-inset) !important;
+
+    transform: none !important;
+}
+
+.swagger-ui section.models
+.model-container > .model-box > button.model-box-control > .model-toggle,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span > button.model-box-control > .model-toggle,
+.swagger-ui section.models
+.model-container > .model-box > .model > span > button.model-box-control > .model-toggle {
+    right: var(--schema-card-inset) !important;
+}
+
+@media (max-width: 700px) {
+    .swagger-ui section.models .model-container {
+        --schema-card-inset: 1rem;
+    }
+}
+
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model > span,
+.swagger-ui section.models
+.model-container > .model-box > .model > span,
+.swagger-ui section.models
+.model-container > .model-box > .model-box > .model,
+.swagger-ui section.models
+.model-container > .model-box > .model {
+    padding-bottom: 0 !important;
+}
+
+.swagger-ui section.models
+.model-container:has(
+    > .model-box > button.model-box-control[aria-expanded="true"]
+)
+> .model-box > .model {
+    padding-bottom: 1rem !important;
+}
+
+.swagger-ui section.models
+.model-container:has(
+    > .model-box > .model-box > .model
+    > span > button.model-box-control[aria-expanded="true"]
+)
+> .model-box > .model-box > .model > span,
+.swagger-ui section.models
+.model-container:has(
+    > .model-box > .model
+    > span > button.model-box-control[aria-expanded="true"]
+)
+> .model-box > .model > span {
+    padding-bottom: 1rem !important;
+}
+
+.swagger-ui section.models
+.model-container:has(
+    > .model-box > button.model-box-control[aria-expanded="false"]
+)
+> .model-box > .model,
+.swagger-ui section.models
+.model-container:has(
+    > .model-box > .model-box > .model
+    > span > button.model-box-control[aria-expanded="false"]
+)
+> .model-box > .model-box > .model > span,
+.swagger-ui section.models
+.model-container:has(
+    > .model-box > .model
+    > span > button.model-box-control[aria-expanded="false"]
+)
+> .model-box > .model > span {
+    padding-bottom: 0 !important;
+}
+
+@media (max-width: 700px) {
+    .swagger-ui section.models
+    .model-container:has(
+        > .model-box > button.model-box-control[aria-expanded="true"]
+    )
+    > .model-box > .model {
+        padding-bottom: 0.8rem !important;
+    }
+
+    .swagger-ui section.models
+    .model-container:has(
+        > .model-box > .model-box > .model
+        > span > button.model-box-control[aria-expanded="true"]
+    )
+    > .model-box > .model-box > .model > span,
+    .swagger-ui section.models
+    .model-container:has(
+        > .model-box > .model
+        > span > button.model-box-control[aria-expanded="true"]
+    )
+    > .model-box > .model > span {
+        padding-bottom: 0.8rem !important;
     }
 }

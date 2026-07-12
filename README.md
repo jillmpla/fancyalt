@@ -33,13 +33,13 @@ Users can upload an image or provide a public image URL, choose one result type,
 
 FancyAlt requests only the result type selected by the user.
 
-| Selected Mode | Generated Result | OpenAI Responses API Image Requests |
+| Selected Mode | Generated Result | 
 |---|---|---:|
-| `concise` | Concise alt text | 1 |
-| `detailed` | Detailed visual description | 1 |
-| `social` | Social media description | 1 |
-| `story` | Short fictional story | 1 |
-| `moderateOnly` | Moderation result only | 0 |
+| `concise` | Concise alt text | 
+| `detailed` | Detailed visual description | 
+| `social` | Social media description | 
+| `story` | Short fictional story | 
+| `moderateOnly` | Moderation result only | 
 
 Every image is still checked by the moderation service first.
 
@@ -86,7 +86,7 @@ The OpenAI client uses `maxRetries: 0`, so a failed mode-specific image request 
 
 ---
 
-## ♿ Result Structure
+## 📦 Result Structure
 
 A successful non-moderation response includes:
 
@@ -94,7 +94,7 @@ A successful non-moderation response includes:
 - **Moderation:** Safety results for the image
 - **Output Text:** Only the requested description or story
 - **Model:** The OpenAI model used for the generated output
-- **Visible Text:** Optional fields returned only when visible-text extraction is enabled
+- **Visible Text:** Optionally returned only when visible-text extraction is enabled
 
 ---
 
@@ -136,18 +136,6 @@ npm install
 ### 4. Create the Environment File
 
 Copy `.env.example` to a new file named `.env`.
-
-#### macOS or Linux
-
-```bash
-cp .env.example .env
-```
-
-#### Windows PowerShell
-
-```powershell
-Copy-Item .env.example .env
-```
 
 The environment file uses these values:
 
@@ -198,8 +186,6 @@ Local:      http://localhost:5000/api
 | `POST` | `/api/generate-caption` | Analyze an uploaded image |
 | `POST` | `/api/analyze-url` | Analyze a public image URL |
 | `GET` | `/api/status` | Check whether the API is running |
-
-Client authentication is not currently required. The server's OpenAI API key remains private and must never be included in client requests.
 
 ---
 
@@ -358,7 +344,7 @@ Story mode creates the story directly from the image. It doesn't first request a
 }
 ```
 
-Moderation-only responses do not include an `output` property.
+Moderation-only responses don't include an `output` property.
 
 ---
 

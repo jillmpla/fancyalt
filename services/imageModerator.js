@@ -12,9 +12,6 @@ const MODERATION_MODEL =
     process.env.OPENAI_MODERATION_MODEL ||
     'omni-moderation-latest';
 
-/**
- * Moderates an uploaded image or public image URL.
- */
 async function moderateImage({ image }) {
     const imageUrl = getImageUrl(image);
 

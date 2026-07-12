@@ -1,7 +1,7 @@
 // middlewares/sanitizeKeys.js
 
 /**
- * Keys that should never be accepted from user-controlled input.
+ * Property names that are unsafe in user input.
  */
 const BLOCKED_KEYS = new Set([
     '__proto__',
@@ -10,14 +10,11 @@ const BLOCKED_KEYS = new Set([
 ]);
 
 /**
- * Recursively removes dangerous property names from an object or array.
+ * Removes unsafe keys from nested objects and arrays.
  *
- * This preserves legitimate nested request data while preventing keys
- * commonly associated with prototype pollution and operator injection.
- *
- * @param {*} value Value to sanitize
- * @param {WeakSet<object>} visited Tracks circular references
- * @returns {*} Sanitized value
+ * @param {*} value Data to sanitize
+ * @param {WeakSet<object>} visited Prevents circular-reference loops
+ * @returns {*} The sanitized value
  */
 function sanitizeKeys(value, visited = new WeakSet()) {
     if (value === null || typeof value !== 'object') {
@@ -39,6 +36,7 @@ function sanitizeKeys(value, visited = new WeakSet()) {
     }
 
     for (const key of Object.keys(value)) {
+        // Remove MongoDB-style operators and unsafe object properties.
         if (key.startsWith('$') || BLOCKED_KEYS.has(key)) {
             delete value[key];
             continue;
@@ -51,7 +49,7 @@ function sanitizeKeys(value, visited = new WeakSet()) {
 }
 
 /**
- * Sanitizes user-controlled Express request locations.
+ * Sanitizes request body, query parameters, and route parameters.
  */
 function sanitizeInput(req, res, next) {
     try {

@@ -141,15 +141,14 @@ async function processImage({
     };
 
     /*
-     * Moderation-only mode stops here. No Responses API
-     * image-generation request is made.
+     * Moderation-only mode stops here.
      */
     if (mode === 'moderateOnly') {
         return baseResponse;
     }
 
     /*
-     * Exactly one mode-specific Responses API request is
+     * Exactly one mode-specific API request is
      * made for each non-moderation request.
      */
     const output =
