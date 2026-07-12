@@ -416,7 +416,7 @@ Every request receives an `X-Request-ID` response header. Error responses also i
 
 ---
 
-## ♿ Frontend Accessibility
+## 🤝 Frontend Accessibility
 
 The FancyAlt interface includes:
 
