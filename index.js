@@ -12,7 +12,6 @@ const express = require('express');
 const helmet = require('helmet');
 const multer = require('multer');
 const rateLimit = require('express-rate-limit');
-const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 
 const sanitizeInput = require('./middlewares/sanitizeKeys');
@@ -165,18 +164,82 @@ app.use('/api', (req, res, next) => {
     next();
 });
 
-// Load the API documentation.
+// Load the OpenAPI document.
 const swaggerDocument = YAML.load(SWAGGER_PATH);
 
-// Serve Swagger UI.
-app.use(
-    '/api-docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument, {
-        customCssUrl: '/swagger-custom.css',
-        customSiteTitle: 'FancyAlt API Docs',
-        customfavIcon: '/favicon.ico',
-    })
+// Safely embed the OpenAPI document in the documentation page.
+const swaggerDocumentJson = JSON.stringify(swaggerDocument)
+    .replace(/</g, '\\u003c')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+
+// Render the Swagger documentation page.
+function renderApiDocs(req, res) {
+    res.setHeader('Cache-Control', 'no-store');
+
+    res.type('html').send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+            >
+
+            <title>FancyAlt API Docs</title>
+
+            <link
+                rel="icon"
+                href="/favicon.ico"
+            >
+
+            <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.32.8/swagger-ui.css"
+            >
+
+            <link
+                rel="stylesheet"
+                href="/swagger-custom.css"
+            >
+        </head>
+
+        <body>
+            <div id="swagger-ui"></div>
+
+            <script
+                src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.32.8/swagger-ui-bundle.js"
+            ></script>
+
+            <script
+                src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.32.8/swagger-ui-standalone-preset.js"
+            ></script>
+
+            <script>
+                window.ui = SwaggerUIBundle({
+                    spec: ${swaggerDocumentJson},
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIStandalonePreset,
+                    ],
+                    layout: 'StandaloneLayout',
+                });
+            </script>
+        </body>
+        </html>
+    `);
+}
+
+// Serve the same page with or without a trailing slash.
+app.get(
+    [
+        '/api-docs',
+        '/api-docs/',
+    ],
+    renderApiDocs
 );
 
 // Serve the raw Swagger file.
@@ -189,7 +252,7 @@ app.get('/swagger.yaml', (req, res) => {
 
 // Keep the old docs link working.
 app.get('/docs', (req, res) => {
-    res.redirect(301, '/api-docs');
+    res.redirect(301, '/api-docs/');
 });
 
 // Serve public files.

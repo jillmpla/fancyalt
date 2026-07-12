@@ -35,7 +35,6 @@
     "jsoneditor": "^10.4.3",
     "multer": "^2.2.0",
     "openai": "^6.46.0",
-    "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0",
     "zod": "^4.4.3"
   },
