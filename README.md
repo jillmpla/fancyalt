@@ -1,7 +1,5 @@
 # ✨ FancyAlt
 
-**Created by Jill Platts**
-
 FancyAlt is an accessibility-focused web application and API that uses OpenAI to turn images into clear, useful text.
 
 Users can upload an image or provide a public image URL, choose one result type, and receive that requested output: concise alt text, a detailed description, a social media description, a short creative story, or an image safety check.
@@ -34,7 +32,7 @@ Users can upload an image or provide a public image URL, choose one result type,
 FancyAlt requests only the result type selected by the user.
 
 | Selected Mode | Generated Result | 
-|---|---|---:|
+|---|---|
 | `concise` | Concise alt text | 
 | `detailed` | Detailed visual description | 
 | `social` | Social media description | 
