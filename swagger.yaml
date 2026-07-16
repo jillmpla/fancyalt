@@ -21,12 +21,9 @@ info:
 
     Every image is checked by the moderation service first.
 
-    Non-moderation modes make one mode-specific OpenAI Responses API image
-    request. `moderateOnly` stops after moderation and does not make a
-    Responses API image request.
+    Non-moderation modes make one mode-specific OpenAI API request. `moderateOnly` stops after moderation and doesn't make a request.
 
-    When `includeVisibleText` is enabled, visible-text extraction is included
-    in the same mode-specific image request.
+    When `includeVisibleText` is enabled, visible-text extraction is included in the same mode-specific image request.
 
     ## Supported images
 
