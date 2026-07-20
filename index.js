@@ -189,7 +189,7 @@ function renderApiDocs(req, res) {
 
             <title>FancyAlt API Docs</title>
 
-            <link rel="icon" href="/favicon1.ico?v=2" type="image/x-icon">
+            <link rel="icon" type="image/x-icon" href="/favicon-new.ico">
 
             <link
                 rel="stylesheet"
