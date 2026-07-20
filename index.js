@@ -191,7 +191,7 @@ function renderApiDocs(req, res) {
 
             <link
                 rel="icon"
-                href="/favicon.ico"
+                href="/favicon1.ico"
             >
 
             <link
