@@ -12,9 +12,8 @@ window.addEventListener('DOMContentLoaded', () => {
         <div class="site-footer__inner">
             <div class="site-footer__brand">
                 <img
-                    src="/icon.png"
+                    src="/logo2.png?v=8"
                     alt=""
-                    width="30"
                     height="30"
                 >
                 <span>FancyAlt</span>
